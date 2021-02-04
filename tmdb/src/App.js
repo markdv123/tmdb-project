@@ -32,6 +32,7 @@ function App() {
   const [result, setResult] = useState([])
   const [mov, setMov] = useState({})
   const [open, setOpen] = useState(false)
+  const [favs, setFavs] = useState([])
 
   const getMovies = async () => {
     try {
@@ -42,9 +43,25 @@ function App() {
       throw error
     }
   }
+  
+  const getFavs = async () => {
+    try {
+      let favorites = []
+      let res = await Axios.get(`https://api.themoviedb.org/3/movie/448491?api_key=${API_KEY}`)
+      favorites.push(res.data)
+      res = await Axios.get(`https://api.themoviedb.org/3/movie/129?api_key=${API_KEY}`)
+      favorites.push(res.data)
+      res = await Axios.get(`https://api.themoviedb.org/3/movie/14836?api_key=${API_KEY}`)
+      favorites.push(res.data)
+      setFavs(favorites)
+    } catch (error) {
+      throw error
+    }
+  }
 
   useEffect(() => {
     getMovies()
+    getFavs()
   }, [])
 
   const handleChange = ({ target }) => {
@@ -55,6 +72,7 @@ function App() {
     try {
       const res = await Axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&query=${search}&page=1&include_adult=false`)
       setResult(res.data.results)
+      console.log(res.data.results)
       setSearched(true)
     } catch (error) {
       throw error
@@ -119,7 +137,23 @@ function App() {
                   </div>
                 ))}
               </div>
-            ) : (<p>No Results</p>) : null}
+            ) : (<p>No Results</p>) : favs.length ? (
+              <div>
+                <h4>Mark's Favs</h4>
+                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', marginTop: '10px' }}>
+                  {favs.map((movie, i) => (
+                    <div key={i} style={{ margin: '5px' }}>
+                      <Card style={{ width: '200px', height: '280px' }} onClick={() => { handleClickOpen(movie) }}>
+                        <CardContent>
+                          <img className="cardImg" src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
+                          <p style={{ color: 'white' }}>{movie.title}</p>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : (<p>loading</p>)}
           </Grid>
         </Grid>
         <Dialog
@@ -131,7 +165,7 @@ function App() {
           aria-describedby="alert-dialog-slide-description"
         >
           {mov.title ? (
-            <div style={{textAlign: 'center'}}>
+            <div style={{ textAlign: 'center', color: 'white' }}>
               <DialogTitle id="alert-dialog-slide-title">{mov.title}</DialogTitle>
               <DialogContent>
                 <img src={`https://image.tmdb.org/t/p/w500/${mov.poster_path}`} />
