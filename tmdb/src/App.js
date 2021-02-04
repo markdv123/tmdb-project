@@ -11,16 +11,27 @@ import {
   Card,
   CardContent,
   TextField,
-  Button
+  Button,
+  Slide,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions
 } from '@material-ui/core'
 import Axios from 'axios'
 const API_KEY = process.env.REACT_APP_API_KEY
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+})
 
 function App() {
   const [movies, setMovies] = useState([])
   const [search, setSearch] = useState('')
   const [searched, setSearched] = useState(false)
   const [result, setResult] = useState([])
+  const [mov, setMov] = useState({})
+  const [open, setOpen] = useState(false)
 
   const getMovies = async () => {
     try {
@@ -36,7 +47,7 @@ function App() {
     getMovies()
   }, [])
 
-  const handleChange = ({target}) => {
+  const handleChange = ({ target }) => {
     setSearch(target.value)
   }
 
@@ -50,13 +61,22 @@ function App() {
     }
   }
 
+  const handleClickOpen = (movie) => {
+    setMov(movie)
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
         <AppBar position="static">
-          <Toolbar style={{margin: '0 auto'}}>
+          <Toolbar style={{ margin: '0 auto' }}>
             <Icon >videocam</Icon>
-            <Typography variant="h6" style={{margin: '5px'}}>
+            <Typography variant="h6" style={{ margin: '5px' }}>
               TMBD Quick Search
             </Typography>
             <Icon >videocam</Icon>
@@ -70,9 +90,9 @@ function App() {
               {movies.length ? (
                 movies.map((movie, i) => (
                   <div key={i} style={{ margin: '5px' }}>
-                    <Card style={{ width: '200px', height: '280px' }}>
+                    <Card style={{ width: '200px', height: '280px' }} onClick={() => { handleClickOpen(movie) }}>
                       <CardContent>
-                        <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
+                        <img className="cardImg" src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
                         <p style={{ color: 'white' }}>{movie.title}</p>
                       </CardContent>
                     </Card>
@@ -82,26 +102,46 @@ function App() {
             </div>
           </Grid>
           <Grid item xs={6}>
-            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '15px'}}>
-              <TextField id="outlined-basic" label="Search" variant="outlined" style={{marginRight: '10px'}} value={search} onChange={(e)=> handleChange(e)}/>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '15px' }}>
+              <TextField id="outlined-basic" label="Search" variant="outlined" style={{ marginRight: '10px' }} value={search} onChange={(e) => handleChange(e)} />
               <Button variant="contained" color="primary" onClick={searchMovie}>Search</Button>
             </div>
             {searched ? result.length ? (
               <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', marginTop: '10px' }}>
                 {result.map((movie, i) => (
                   <div key={i} style={{ margin: '5px' }}>
-                    <Card style={{ width: '200px', height: '280px' }}>
+                    <Card style={{ width: '200px', height: '280px' }} onClick={() => { handleClickOpen(movie) }}>
                       <CardContent>
-                        <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
+                        <img className="cardImg" src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
                         <p style={{ color: 'white' }}>{movie.title}</p>
                       </CardContent>
                     </Card>
                   </div>
                 ))}
-            </div>
+              </div>
             ) : (<p>No Results</p>) : null}
           </Grid>
         </Grid>
+        <Dialog
+          open={open}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          {mov.title ? (
+            <div>
+              <DialogTitle id="alert-dialog-slide-title">{mov.title}</DialogTitle>
+              <DialogContent>
+                <img src={`https://image.tmdb.org/t/p/w500/${mov.poster_path}`} />
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} color="primary">Close</Button>
+              </DialogActions>
+            </div>
+          ) : null}
+        </Dialog>
       </div>
     </ThemeProvider>
   );
