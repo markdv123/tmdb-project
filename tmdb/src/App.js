@@ -10,6 +10,7 @@ import {
   Typography,
   Card,
   CardContent,
+  TextField,
   Button
 } from '@material-ui/core'
 import Axios from 'axios'
@@ -60,7 +61,10 @@ function App() {
             </div>
           </Grid>
           <Grid xs={6}>
-            <h1>search side</h1>
+            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '15px'}}>
+              <TextField id="outlined-basic" label="Search" variant="outlined" style={{marginRight: '10px'}}/>
+              <Button variant="contained" color="primary">Search</Button>
+            </div>
           </Grid>
         </Grid>
       </div>
