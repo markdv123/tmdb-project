@@ -131,10 +131,13 @@ function App() {
           aria-describedby="alert-dialog-slide-description"
         >
           {mov.title ? (
-            <div>
+            <div style={{textAlign: 'center'}}>
               <DialogTitle id="alert-dialog-slide-title">{mov.title}</DialogTitle>
               <DialogContent>
                 <img src={`https://image.tmdb.org/t/p/w500/${mov.poster_path}`} />
+                <p>Release Date: {mov.release_date}</p>
+                <p>Original Language: {mov.original_language}</p>
+                <p>{mov.overview}</p>
               </DialogContent>
               <DialogActions>
                 <Button onClick={handleClose} color="primary">Close</Button>
