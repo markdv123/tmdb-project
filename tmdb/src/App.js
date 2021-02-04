@@ -4,8 +4,11 @@ import theme from './styles/Theme'
 import React, { useState, useEffect } from 'react'
 import {
   Grid,
+  AppBar,
+  Toolbar,
+  Icon,
+  Typography,
   Card,
-  CardActionArea,
   CardContent,
   Button
 } from '@material-ui/core'
@@ -28,6 +31,16 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
+        <AppBar position="static">
+          <Toolbar style={{margin: '0 auto'}}>
+            <Icon >videocam</Icon>
+            <Typography variant="h6" style={{margin: '5px'}}>
+              TMBD Quick Search
+            </Typography>
+            <Icon >videocam</Icon>
+          </Toolbar>
+        </AppBar>
+        <p>Quick access to TMDB's vast database of movie info! View the top trending films on the left, or search for a specific movie on the right. Click on any film poster for more information!</p>
         <Grid container>
           <Grid xs={6}>
             <h1>Popular Films:</h1>
@@ -38,7 +51,7 @@ function App() {
                     <Card style={{ width: '200px', height: '280px' }}>
                       <CardContent>
                         <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
-                        <p style={{color: 'white'}}>{movie.title}</p>
+                        <p style={{ color: 'white' }}>{movie.title}</p>
                       </CardContent>
                     </Card>
                   </div>
