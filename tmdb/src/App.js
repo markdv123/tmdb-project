@@ -70,7 +70,6 @@ function App() {
     try {
       const res = await Axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&query=${search}&page=1&include_adult=false`)
       setResult(res.data.results)
-      console.log(res.data.results)
       setSearched(true)
     } catch (error) {
       throw error
