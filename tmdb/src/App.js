@@ -38,7 +38,6 @@ function App() {
     try {
       const res = await Axios.get(`https://api.themoviedb.org/3/trending/movie/day?api_key=${API_KEY}`)
       setMovies(...movies, res.data.results)
-      console.log(res.data.results)
     } catch (error) {
       throw error
     }
@@ -46,40 +45,13 @@ function App() {
 
   const getFavs = async () => {
     try {
-      let favorites = []
-      let res = await Axios.get(`https://api.themoviedb.org/3/movie/448491?api_key=${API_KEY}`)
-      favorites.push(res.data)
-      res = await Axios.get(`https://api.themoviedb.org/3/movie/129?api_key=${API_KEY}`)
-      favorites.push(res.data)
-      res = await Axios.get(`https://api.themoviedb.org/3/movie/14836?api_key=${API_KEY}`)
-      favorites.push(res.data)
-      res = await Axios.get(`https://api.themoviedb.org/3/movie/50456?api_key=${API_KEY}`)
-      favorites.push(res.data)
-      res = await Axios.get(`https://api.themoviedb.org/3/movie/1924?api_key=${API_KEY}`)
-      favorites.push(res.data)
-      res = await Axios.get(`https://api.themoviedb.org/3/movie/128?api_key=${API_KEY}`)
-      favorites.push(res.data)
-      res = await Axios.get(`https://api.themoviedb.org/3/movie/11544?api_key=${API_KEY}`)
-      favorites.push(res.data)
-      res = await Axios.get(`https://api.themoviedb.org/3/movie/350?api_key=${API_KEY}`)
-      favorites.push(res.data)
-      res = await Axios.get(`https://api.themoviedb.org/3/movie/237791?api_key=${API_KEY}`)
-      favorites.push(res.data)
-      res = await Axios.get(`https://api.themoviedb.org/3/movie/8835?api_key=${API_KEY}`)
-      favorites.push(res.data)
-      res = await Axios.get(`https://api.themoviedb.org/3/movie/49026?api_key=${API_KEY}`)
-      favorites.push(res.data)
-      res = await Axios.get(`https://api.themoviedb.org/3/movie/630?api_key=${API_KEY}`)
-      favorites.push(res.data)
-      res = await Axios.get(`https://api.themoviedb.org/3/movie/37797?api_key=${API_KEY}`)
-      favorites.push(res.data)
-      res = await Axios.get(`https://api.themoviedb.org/3/movie/37735?api_key=${API_KEY}`)
-      favorites.push(res.data)
-      res = await Axios.get(`https://api.themoviedb.org/3/movie/593691?api_key=${API_KEY}`)
-      favorites.push(res.data)
-      res = await Axios.get(`https://api.themoviedb.org/3/movie/300668?api_key=${API_KEY}`)
-      favorites.push(res.data)
-      setFavs(favorites)
+      const favorites = ['448491', '129', '14836', '50456', '1924', '128', '11544', '350', '237791', '8835', '49026', '630', '37797', '37735', '593691', '300668']
+      const newFavs = []
+      for (let i = 0; i < favorites.length; i++) {
+        let res = await Axios.get(`https://api.themoviedb.org/3/movie/${favorites[i]}?api_key=${API_KEY}`)
+        newFavs.push(res.data)
+      }
+      setFavs(newFavs)
     } catch (error) {
       throw error
     }
