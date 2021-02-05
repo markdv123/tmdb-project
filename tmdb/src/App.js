@@ -43,7 +43,7 @@ function App() {
       throw error
     }
   }
-  
+
   const getFavs = async () => {
     try {
       let favorites = []
@@ -52,6 +52,32 @@ function App() {
       res = await Axios.get(`https://api.themoviedb.org/3/movie/129?api_key=${API_KEY}`)
       favorites.push(res.data)
       res = await Axios.get(`https://api.themoviedb.org/3/movie/14836?api_key=${API_KEY}`)
+      favorites.push(res.data)
+      res = await Axios.get(`https://api.themoviedb.org/3/movie/50456?api_key=${API_KEY}`)
+      favorites.push(res.data)
+      res = await Axios.get(`https://api.themoviedb.org/3/movie/1924?api_key=${API_KEY}`)
+      favorites.push(res.data)
+      res = await Axios.get(`https://api.themoviedb.org/3/movie/128?api_key=${API_KEY}`)
+      favorites.push(res.data)
+      res = await Axios.get(`https://api.themoviedb.org/3/movie/11544?api_key=${API_KEY}`)
+      favorites.push(res.data)
+      res = await Axios.get(`https://api.themoviedb.org/3/movie/350?api_key=${API_KEY}`)
+      favorites.push(res.data)
+      res = await Axios.get(`https://api.themoviedb.org/3/movie/237791?api_key=${API_KEY}`)
+      favorites.push(res.data)
+      res = await Axios.get(`https://api.themoviedb.org/3/movie/8835?api_key=${API_KEY}`)
+      favorites.push(res.data)
+      res = await Axios.get(`https://api.themoviedb.org/3/movie/49026?api_key=${API_KEY}`)
+      favorites.push(res.data)
+      res = await Axios.get(`https://api.themoviedb.org/3/movie/630?api_key=${API_KEY}`)
+      favorites.push(res.data)
+      res = await Axios.get(`https://api.themoviedb.org/3/movie/37797?api_key=${API_KEY}`)
+      favorites.push(res.data)
+      res = await Axios.get(`https://api.themoviedb.org/3/movie/37735?api_key=${API_KEY}`)
+      favorites.push(res.data)
+      res = await Axios.get(`https://api.themoviedb.org/3/movie/593691?api_key=${API_KEY}`)
+      favorites.push(res.data)
+      res = await Axios.get(`https://api.themoviedb.org/3/movie/300668?api_key=${API_KEY}`)
       favorites.push(res.data)
       setFavs(favorites)
     } catch (error) {
