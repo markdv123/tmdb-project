@@ -136,7 +136,7 @@ function App() {
               </div>
             ) : (<p>No Results</p>) : favs.length ? (
               <div>
-                <h4>Mark's Favs</h4>
+                <h2>Mark's Favs</h2>
                 <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', marginTop: '10px' }}>
                   {favs.map((movie, i) => (
                     <div key={i} style={{ margin: '5px' }}>
